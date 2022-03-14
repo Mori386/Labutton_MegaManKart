@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class AspiradorMovel : MonoBehaviour
 {
-    Vector3 posicaoInicial;
     [SerializeField] Vector3 posicaoFinal;
     [SerializeField] float velocidade;
     private void Start()
