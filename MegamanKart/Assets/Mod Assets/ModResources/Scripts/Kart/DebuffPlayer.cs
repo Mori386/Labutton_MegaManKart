@@ -61,6 +61,7 @@ public class DebuffPlayer : MonoBehaviour
         {
             for (float i = duracao / 0.1f; i >0; i--)
             {
+                kartVisual.transform.localScale += (escalaOriginal - escalaReduzida)/(duracao / 0.1f);
                 arcadeKart.baseStats.TopSpeed = topSpeed * (porcentagemDeLentidao* (((duracao / 0.1f) - i) / (duracao / 0.1f))) / 100;
                 arcadeKart.baseStats.Acceleration = acceleration * (porcentagemDeLentidao * (((duracao / 0.1f) - i) / (duracao / 0.1f))) / 100;
                 arcadeKart.baseStats.ReverseSpeed = reverseSpeed * (porcentagemDeLentidao * (((duracao / 0.1f) - i) / (duracao / 0.1f))) / 100;
