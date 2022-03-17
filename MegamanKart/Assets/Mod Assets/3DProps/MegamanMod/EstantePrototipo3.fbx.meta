@@ -3,7 +3,17 @@ guid: d421ff8c979b9cf4cbef27b5d14c46b4
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Madeira1.Material
+    second: {fileID: 2100000, guid: faec14a65b842c849aebc32c6606444a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Madeira2.Material
+    second: {fileID: 2100000, guid: 5bf02e06283b3b2488768e99ff4f30e9, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
