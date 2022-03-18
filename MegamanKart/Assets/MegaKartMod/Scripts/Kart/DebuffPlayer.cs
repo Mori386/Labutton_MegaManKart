@@ -17,13 +17,6 @@ public class DebuffPlayer : MonoBehaviour
         Instance = this;
         objetosAtravesaveis = new List<GameObject>();
     }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            AplicarDebuff();
-        }
-    }
     public void AplicarDebuff()
     {
         if (!debuffApplicado)
