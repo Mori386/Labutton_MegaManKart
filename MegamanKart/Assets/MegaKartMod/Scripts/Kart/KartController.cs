@@ -17,7 +17,9 @@ public class KartController : MonoBehaviour
     [SerializeField] float motorTorque;
 
     //Angulação do carro 
-    [SerializeField] float steerForce;
+    [SerializeField] float steerAngle;
+
+    [SerializeField] float brakeTorque;
     private void Awake()
     {
         FWheels = new WheelCollider[2];
@@ -27,6 +29,7 @@ public class KartController : MonoBehaviour
         BWheels = new WheelCollider[2];
         BWheels[0] = BRWheel;
         BWheels[1] = BLWheel;
+        GetComponent<BoxCollider>().center = GetComponent<Rigidbody>().centerOfMass;
     }
     private void Update()
     {
@@ -37,14 +40,15 @@ public class KartController : MonoBehaviour
     {
         foreach (WheelCollider wheelCollider in BWheels)
         {
-            wheelCollider.motorTorque = inputAxis*motorTorque;
+            if (inputAxis != 0) wheelCollider.motorTorque = inputAxis * motorTorque;
         }
     }
     private void FWheelsSteerAngleInputAxis(float inputAxis)
     {
         foreach (WheelCollider wheelCollider in FWheels)
         {
-            wheelCollider.steerAngle = inputAxis * steerForce;
+            wheelCollider.steerAngle = inputAxis * steerAngle;
+            //wheelCollider.transform.rotation = Quaternion.Euler(new Vector3(0, -90 + (steerAngle * inputAxis), 0));
         }
     }
 }
