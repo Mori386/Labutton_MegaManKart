@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor.SceneManagement;
 
 public class KartController : MonoBehaviour
 {
@@ -53,8 +54,8 @@ public class KartController : MonoBehaviour
         foreach (WheelCollider wheelCollider in FWheels)
         {
             wheelCollider.steerAngle = inputAxis * steerAngle;
-            Transform visual= wheelCollider.transform.parent.Find("Visual");
-            visual.rotation = Quaternion.Euler(new Vector3(visual.rotation.x, -90 + (steerAngle * inputAxis), visual.rotation.z));
+            Transform visual = wheelCollider.transform.parent.Find("Visual");
+            visual.localRotation = Quaternion.Euler(new Vector3(visual.rotation.x, 270 + steerAngle * inputAxis, visual.rotation.z));
         }
     }
     private void BreakUpdate()
