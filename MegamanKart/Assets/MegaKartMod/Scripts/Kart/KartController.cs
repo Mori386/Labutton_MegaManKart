@@ -19,7 +19,10 @@ public class KartController : MonoBehaviour
     //Angulação do carro 
     [SerializeField] float steerAngle;
 
-    [SerializeField] float brakeTorque;
+    [SerializeField] float brakeForce;
+    float currentBrakeForce;
+    bool isBreaking;
+
     private void Awake()
     {
         FWheels = new WheelCollider[2];
@@ -31,16 +34,18 @@ public class KartController : MonoBehaviour
         BWheels[1] = BLWheel;
         GetComponent<BoxCollider>().center = GetComponent<Rigidbody>().centerOfMass;
     }
-    private void Update()
+    private void FixedUpdate()
     {
         BWheelsMotorTorqueInputAxis(Input.GetAxisRaw("Vertical"));
+        SpinWheel(Input.GetAxisRaw("Vertical"));
         FWheelsSteerAngleInputAxis(Input.GetAxisRaw("Horizontal"));
+        BreakUpdate();
     }
     private void BWheelsMotorTorqueInputAxis(float inputAxis)
     {
         foreach (WheelCollider wheelCollider in BWheels)
         {
-            if (inputAxis != 0) wheelCollider.motorTorque = inputAxis * motorTorque;
+            wheelCollider.motorTorque = inputAxis * motorTorque;
         }
     }
     private void FWheelsSteerAngleInputAxis(float inputAxis)
@@ -48,7 +53,34 @@ public class KartController : MonoBehaviour
         foreach (WheelCollider wheelCollider in FWheels)
         {
             wheelCollider.steerAngle = inputAxis * steerAngle;
-            //wheelCollider.transform.rotation = Quaternion.Euler(new Vector3(0, -90 + (steerAngle * inputAxis), 0));
+            Transform visual= wheelCollider.transform.parent.Find("Visual");
+            visual.rotation = Quaternion.Euler(new Vector3(visual.rotation.x, -90 + (steerAngle * inputAxis), visual.rotation.z));
+        }
+    }
+    private void BreakUpdate()
+    {
+        isBreaking = Input.GetKey(KeyCode.Space);
+        currentBrakeForce = isBreaking ? brakeForce : 0f;
+        foreach (WheelCollider wheelCollider in FWheels)
+        {
+            wheelCollider.brakeTorque = currentBrakeForce;
+        }
+        foreach (WheelCollider wheelCollider in BWheels)
+        {
+            wheelCollider.brakeTorque = currentBrakeForce;
+        }
+    }
+    private void SpinWheel(float VerticalInputAxis)
+    {
+        foreach (WheelCollider wheelCollider in BWheels)
+        {
+            Transform visual = wheelCollider.transform.parent.Find("Visual");
+            visual.Rotate(new Vector3(0, 0, -VerticalInputAxis));
+        }
+        foreach (WheelCollider wheelCollider in FWheels)
+        {
+            Transform visual = wheelCollider.transform.parent.Find("Visual");
+            visual.Rotate(new Vector3(0, 0, -VerticalInputAxis));
         }
     }
 }
