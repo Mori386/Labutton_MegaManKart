@@ -5,6 +5,7 @@ using UnityEditor.SceneManagement;
 
 public class KartController : MonoBehaviour
 {
+    Rigidbody rb;
     [Header("Pneus")]
     [SerializeField] WheelCollider FRWheel;
     [SerializeField] WheelCollider FLWheel;
@@ -16,6 +17,7 @@ public class KartController : MonoBehaviour
     [Header("Configurações")]
     //Força maxima do carro
     [SerializeField] float motorTorque;
+    [SerializeField] float maxSpeed;
 
     //Angulação do carro 
     [SerializeField] float steerAngle;
@@ -33,7 +35,7 @@ public class KartController : MonoBehaviour
         BWheels = new WheelCollider[2];
         BWheels[0] = BRWheel;
         BWheels[1] = BLWheel;
-        GetComponent<BoxCollider>().center = GetComponent<Rigidbody>().centerOfMass;
+        rb = GetComponent<Rigidbody>();
     }
     private void FixedUpdate()
     {
@@ -44,9 +46,20 @@ public class KartController : MonoBehaviour
     }
     private void BWheelsMotorTorqueInputAxis(float inputAxis)
     {
-        foreach (WheelCollider wheelCollider in BWheels)
+        float speed = Mathf.Abs(rb.velocity.x) + Mathf.Abs(rb.velocity.y) + Mathf.Abs(rb.velocity.z);
+        if (speed<maxSpeed)
         {
-            wheelCollider.motorTorque = inputAxis * motorTorque;
+            foreach (WheelCollider wheelCollider in BWheels)
+            {
+                wheelCollider.motorTorque = inputAxis * motorTorque;
+            }
+        }
+        else
+        {
+            foreach (WheelCollider wheelCollider in BWheels)
+            {
+                wheelCollider.motorTorque = 0;
+            }
         }
     }
     private void FWheelsSteerAngleInputAxis(float inputAxis)
