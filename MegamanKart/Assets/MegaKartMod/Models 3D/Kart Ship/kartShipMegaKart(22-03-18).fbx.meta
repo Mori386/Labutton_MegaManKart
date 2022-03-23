@@ -1,0 +1,210 @@
+fileFormatVersion: 2
+guid: 26885a8018885604b9f6317362ec2340
+ModelImporter:
+  serializedVersion: 20200
+  internalIDToNameTable:
+  - first:
+      74: 8126273760504601698
+    second: chasse|chasseAction
+  - first:
+      74: 5727327450124965321
+    second: chasse|seatAction
+  - first:
+      74: 2472506893099800684
+    second: chasse|tireBack1Action
+  - first:
+      74: -4514762619597822576
+    second: chasse|tireBack2Action
+  - first:
+      74: -2339369798867246310
+    second: chasse|tireFront1Action
+  - first:
+      74: 2219247557590624755
+    second: chasse|tirelFront2Action
+  - first:
+      74: -8317916008477873387
+    second: seat|chasseAction
+  - first:
+      74: -8694270943597629523
+    second: seat|seatAction
+  - first:
+      74: 1832732936007955451
+    second: seat|tireBack1Action
+  - first:
+      74: -7543761393517763563
+    second: seat|tireBack2Action
+  - first:
+      74: 830972803781850876
+    second: seat|tireFront1Action
+  - first:
+      74: -2606103682971395892
+    second: seat|tirelFront2Action
+  - first:
+      74: -2295806230543397817
+    second: tireFront1|chasseAction
+  - first:
+      74: 3865076805881621807
+    second: tireFront1|seatAction
+  - first:
+      74: 8666992914905097536
+    second: tireFront1|tireBack1Action
+  - first:
+      74: 8271263062374564941
+    second: tireFront1|tireBack2Action
+  - first:
+      74: 2732588429207609877
+    second: tireFront1|tireFront1Action
+  - first:
+      74: 4384900331410922320
+    second: tireFront1|tirelFront2Action
+  - first:
+      74: -1134356278321649380
+    second: tirelFront2|chasseAction
+  - first:
+      74: -5706292845031922478
+    second: tirelFront2|seatAction
+  - first:
+      74: 7370051753300874249
+    second: tirelFront2|tireBack1Action
+  - first:
+      74: -1876348043073324372
+    second: tirelFront2|tireBack2Action
+  - first:
+      74: 7195334941853595180
+    second: tirelFront2|tireFront1Action
+  - first:
+      74: -7831334956404730154
+    second: tirelFront2|tirelFront2Action
+  - first:
+      74: 5240578277820896380
+    second: tireBack2|chasseAction
+  - first:
+      74: -6338354383792185506
+    second: tireBack2|seatAction
+  - first:
+      74: 5359963622532273719
+    second: tireBack2|tireBack1Action
+  - first:
+      74: -1789588946623484939
+    second: tireBack2|tireBack2Action
+  - first:
+      74: -1933632035545771825
+    second: tireBack2|tireFront1Action
+  - first:
+      74: 6383108599661030921
+    second: tireBack2|tirelFront2Action
+  - first:
+      74: 3777583712235600215
+    second: tireBack1|chasseAction
+  - first:
+      74: 8797868646062192924
+    second: tireBack1|seatAction
+  - first:
+      74: 4459771366448196837
+    second: tireBack1|tireBack1Action
+  - first:
+      74: -4318995828011154817
+    second: tireBack1|tireBack2Action
+  - first:
+      74: 4545359892807416977
+    second: tireBack1|tireFront1Action
+  - first:
+      74: 1225351001472630875
+    second: tireBack1|tirelFront2Action
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
