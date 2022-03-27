@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor.SceneManagement;
 
-public class KartController : MonoBehaviour
+public class KartControlerTest : MonoBehaviour
 {
     //Componentes do objeto 
     Rigidbody rb;
@@ -28,11 +28,6 @@ public class KartController : MonoBehaviour
     [SerializeField] float brakeForce;
     bool isBreaking;
 
-    //Mudança do centro de massa do objeto no eixo Y, para balançear o peso do objeto
-    [SerializeField] float centroDeMassaY;
-
-    // Gravidade adicionada ao objeto quando fora do chão
-    [SerializeField] float gravidadeAdicionada;
     private void Awake()
     {
         //Adiciona ambas rodas a seus devidos grupos, para facilitar referienciar(todas rodas frontais e todas rodas traseiras)
@@ -46,19 +41,12 @@ public class KartController : MonoBehaviour
 
         //Salva o rigidbody do objeto para poder acessa-lo sem precisar procura-lo dentre seus componentes
         rb = GetComponent<Rigidbody>();
-        rb.centerOfMass = new Vector3 (0,centroDeMassaY,0);
     }
     private void FixedUpdate()
     {
-        //Input.GetAxisRaw("Vertical") pega um valor de -1 a 1, baseado no pressionar das teclas W e S ou setinhas cima e baixo, se caso nenhuma delas esteja pressionada o valor sera de 0 
-        BWheelsMotorTorqueInputAxis(Input.GetAxisRaw("Vertical"));
-        SpinWheel(Input.GetAxisRaw("Vertical"));
-        //Input.GetAxisRaw("Horizontal") pega um valor de -1 a 1, baseado no pressionar das teclas A e D ou setinhas esquerda e direita, se caso nenhuma delas esteja pressionada o valor sera de 0 
-        FWheelsSteerAngleInputAxis(Input.GetAxisRaw("Horizontal"));
-        BreakUpdate();
-        if(GroundedPercentage()<1)
+        foreach(WheelCollider wheelCollider in BWheels)
         {
-            rb.velocity += Physics.gravity * Time.fixedDeltaTime * gravidadeAdicionada;
+            wheelCollider.motorTorque = motorTorque;  
         }
     }
     /// <summary>
@@ -68,7 +56,7 @@ public class KartController : MonoBehaviour
     {
         //Calcula a velocidade total do objeto, somando ao valor absoluto da velocidade aplicada dele de todas as direções, visto que ao se mover para tras, eh considerado uma velocidade negativa
         float speed = Mathf.Abs(rb.velocity.x) + Mathf.Abs(rb.velocity.y) + Mathf.Abs(rb.velocity.z);
-        if (speed<maxSpeed)
+        if (speed < maxSpeed)
         {
             // Se a velocidade atual for menor que a velocidade maxima permitida, será adicionado velocidade ao carro 
             foreach (WheelCollider wheelCollider in BWheels)
@@ -139,21 +127,5 @@ public class KartController : MonoBehaviour
             Transform visual = wheelCollider.transform.parent.Find("Visual");
             visual.Rotate(new Vector3(0, 0, -VerticalInputAxis));
         }
-    }
-    /// <summary>
-    /// Retorna a porcentagem do Kart no chão
-    /// </summary>
-    private float GroundedPercentage()
-    {
-        float percentage=0;
-        foreach(WheelCollider wheelCollider in BWheels)
-        {
-            if(wheelCollider.isGrounded) percentage += 1;
-        }
-        foreach (WheelCollider wheelCollider in FWheels)
-        {
-            if (wheelCollider.isGrounded) percentage += 1;
-        }
-        return percentage/4;
     }
 }
