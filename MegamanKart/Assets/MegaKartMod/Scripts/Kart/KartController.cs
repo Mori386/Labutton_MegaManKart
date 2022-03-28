@@ -33,6 +33,16 @@ public class KartController : MonoBehaviour
 
     // Gravidade adicionada ao objeto quando fora do chão
     [SerializeField] float gravidadeAdicionada;
+
+    //Angulação projetada para o drift do carro 
+    [SerializeField] private float driftAngle;
+    // Boost adquirido do carro apos drift
+    [SerializeField] private float driftBoostMinimo;
+    [SerializeField] private float driftBoostMaximo;
+    //Tempo necessario para chegar no boost maximo do drift
+    [SerializeField] private float driftTempoDeCarga;
+
+    bool grounded;
     private void Awake()
     {
         //Adiciona ambas rodas a seus devidos grupos, para facilitar referienciar(todas rodas frontais e todas rodas traseiras)
@@ -46,7 +56,7 @@ public class KartController : MonoBehaviour
 
         //Salva o rigidbody do objeto para poder acessa-lo sem precisar procura-lo dentre seus componentes
         rb = GetComponent<Rigidbody>();
-        rb.centerOfMass = new Vector3 (0,centroDeMassaY,0);
+        rb.centerOfMass = new Vector3(0, centroDeMassaY, 0);
     }
     private void FixedUpdate()
     {
@@ -56,7 +66,7 @@ public class KartController : MonoBehaviour
         //Input.GetAxisRaw("Horizontal") pega um valor de -1 a 1, baseado no pressionar das teclas A e D ou setinhas esquerda e direita, se caso nenhuma delas esteja pressionada o valor sera de 0 
         FWheelsSteerAngleInputAxis(Input.GetAxisRaw("Horizontal"));
         BreakUpdate();
-        if(GroundedPercentage()<1)
+        if (GroundedPercentage() < 1)
         {
             rb.velocity += Physics.gravity * Time.fixedDeltaTime * gravidadeAdicionada;
         }
@@ -68,7 +78,7 @@ public class KartController : MonoBehaviour
     {
         //Calcula a velocidade total do objeto, somando ao valor absoluto da velocidade aplicada dele de todas as direções, visto que ao se mover para tras, eh considerado uma velocidade negativa
         float speed = Mathf.Abs(rb.velocity.x) + Mathf.Abs(rb.velocity.y) + Mathf.Abs(rb.velocity.z);
-        if (speed<maxSpeed)
+        if (speed < maxSpeed)
         {
             // Se a velocidade atual for menor que a velocidade maxima permitida, será adicionado velocidade ao carro 
             foreach (WheelCollider wheelCollider in BWheels)
@@ -145,15 +155,51 @@ public class KartController : MonoBehaviour
     /// </summary>
     private float GroundedPercentage()
     {
-        float percentage=0;
-        foreach(WheelCollider wheelCollider in BWheels)
+        float percentage = 0;
+        foreach (WheelCollider wheelCollider in BWheels)
         {
-            if(wheelCollider.isGrounded) percentage += 1;
+            if (wheelCollider.isGrounded) percentage += 1;
         }
         foreach (WheelCollider wheelCollider in FWheels)
         {
             if (wheelCollider.isGrounded) percentage += 1;
         }
-        return percentage/4;
+        return percentage / 4;
+    }
+    ///<summary>
+    /// Inicia o processo de drift se caso o carro esteja devidamente dentro de suas necessidades 
+    ///</summary>
+    private void DriftStart()
+    {
+        if (FLWheel.steerAngle != 0 && drifting == null && GroundedPercentage)
+        {
+            drifting = StartCoroutine(Drifting());
+        }
+    }
+    private Coroutine drifting;
+    private IEnumerator Drifting()
+    {
+        //Aplica as modificações para permitir drift
+        float tempoDriftando = 0;
+        while (Input.GetKey(KeyCode.LeftShift))
+        {
+            Debug.Log("Driftando");
+            tempoDriftando += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        //Apos drift salva o tempo driftado para calcular a força do boost aplicado ao jogador 
+        Debug.Log("Aplica o debuff");
+        float driftBoost;
+        if (tempoDriftando / driftTempoDeCarga < 1)
+        {
+            driftBoost = driftBoostMinimo + tempoDriftando / driftTempoDeCarga * (driftBoostMaximo - driftBoostMinimo);
+        }
+        else
+        {
+            driftBoost = driftBoostMaximo;
+        }
+        //rb.AddForce...
+        drifting = null;
+        yield break;
     }
 }
