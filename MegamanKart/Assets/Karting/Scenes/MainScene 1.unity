@@ -11528,12 +11528,13 @@ MonoBehaviour:
   FLWheel_tr: {fileID: 420613838589369883}
   BRWheel_tr: {fileID: 8052785959263879094}
   BLWheel_tr: {fileID: 6278407504058683617}
-  motorTorque: 750
-  maxSpeed: 22
-  steerAngle: 20
+  motorTorque: 1000
+  maxSpeed: 23
+  steerAngle: 15
   brakeForce: 50
-  centroDeMassaY: -0.5
-  gravidadeAdicionada: 1
+  centroDeMassaY: -0.7
+  driftWithShift: 0
+  gravidadeAdicionada: 2
   driftAngle: 35
   driftBoostMinimo: 100000
   driftBoostMaximo: 300000
@@ -11841,6 +11842,7 @@ MonoBehaviour:
   steerAngle: 20
   brakeForce: 50
   centroDeMassaY: -0.5
+  driftWithShift: 0
   gravidadeAdicionada: 1
   driftAngle: 35
   driftBoostMinimo: 50000

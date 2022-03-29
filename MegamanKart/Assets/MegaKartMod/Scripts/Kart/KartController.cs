@@ -39,6 +39,9 @@ public class KartController : MonoBehaviour
     //Mudança do centro de massa do objeto no eixo Y, para balançear o peso do objeto
     [SerializeField] float centroDeMassaY;
 
+
+    //
+    [SerializeField] bool driftWithShift;
     // Gravidade adicionada ao objeto quando fora do chão
     [SerializeField] float gravidadeAdicionada;
 
@@ -78,11 +81,11 @@ public class KartController : MonoBehaviour
         //Salva o rigidbody do objeto para poder acessa-lo sem precisar procura-lo dentre seus componentes
         rb = GetComponent<Rigidbody>();
         rb.centerOfMass = new Vector3(0, centroDeMassaY, 0);
-         visualKart = transform.Find("Visual");
+        visualKart = transform.Find("Visual");
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift)) DriftStart();
+        if (driftWithShift && Input.GetKeyDown(KeyCode.LeftShift)) DriftStart();
     }
     private void FixedUpdate()
     {
@@ -134,7 +137,7 @@ public class KartController : MonoBehaviour
             //steerAngle eh multiplicado pelo inputAxis para definir sua direção visto que os valores possiveis de inputAxis são -1,0 e 1
             wheelCollider.steerAngle = inputAxis * steerAngle;
         }
-        foreach(Transform tr in FWheels_tr)
+        foreach (Transform tr in FWheels_tr)
         {
             //aplica uma rotacao local, rotação baseada na rotação do objeto aplicado Ex: obejto parente tem rotação de 30 no eixo X o objeto filho ao aplicar um valor de rotacao local de 10 no eixo X, tera como seu angulo final a rotação de 40
             tr.localRotation = Quaternion.Euler(new Vector3(tr.rotation.x, 270 + steerAngle * inputAxis, tr.rotation.z));
@@ -166,11 +169,11 @@ public class KartController : MonoBehaviour
     private void SpinWheel(float VerticalInputAxis)
     {
         //Aplica a cada roda uma rotação adicional baseada no input do jogador em sua direção oposta simulando o movimento do carro 
-        foreach(Transform tr in BWheels_tr)
+        foreach (Transform tr in BWheels_tr)
         {
             tr.Rotate(new Vector3(0, 0, -VerticalInputAxis));
         }
-        foreach(Transform tr in FWheels_tr)
+        foreach (Transform tr in FWheels_tr)
         {
             tr.Rotate(new Vector3(0, 0, -VerticalInputAxis));
         }
@@ -230,7 +233,7 @@ public class KartController : MonoBehaviour
         if (tempoDriftando / driftTempoDeCarga < 1)
         {
             driftBoost = driftBoostMinimo + tempoDriftando / driftTempoDeCarga * (driftBoostMaximo - driftBoostMinimo);
-            
+
         }
         else
         {
@@ -241,11 +244,11 @@ public class KartController : MonoBehaviour
     }
     private IEnumerator BoostDrift(float originalForce)
     {
-        float timer=0;
-        float boostForce = originalForce; 
-        while(timer<driftBoostDuration)
+        float timer = 0;
+        float boostForce = originalForce;
+        while (timer < driftBoostDuration)
         {
-            rb.AddForce(transform.forward* boostForce * Time.fixedDeltaTime);
+            rb.AddForce(transform.forward * boostForce * Time.fixedDeltaTime);
             boostForce -= originalForce / (driftBoostDuration / 0.02f);
             timer += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
