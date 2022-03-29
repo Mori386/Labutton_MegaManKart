@@ -15,6 +15,14 @@ public class KartController : MonoBehaviour
     WheelCollider[] FWheels;
     WheelCollider[] BWheels;
 
+    [SerializeField] Transform FRWheel_tr;
+    [SerializeField] Transform FLWheel_tr;
+    [SerializeField] Transform BRWheel_tr;
+    [SerializeField] Transform BLWheel_tr;
+
+    Transform[] FWheels_tr;
+    Transform[] BWheels_tr;
+
     [Header("Configurações")]
     //Torque aplicado ao carro 
     [SerializeField] float motorTorque;
@@ -41,8 +49,13 @@ public class KartController : MonoBehaviour
     [SerializeField] private float driftBoostMaximo;
     //Tempo necessario para chegar no boost maximo do drift
     [SerializeField] private float driftTempoDeCarga;
+    //Tempo de boost aplicado ao veiculo pos drift
+    [SerializeField] private float driftBoostDuration;
 
-    bool grounded;
+    //Se o objeto esta acoplado ao chão
+    bool grounded = true;
+
+    Transform visualKart;
     private void Awake()
     {
         //Adiciona ambas rodas a seus devidos grupos, para facilitar referienciar(todas rodas frontais e todas rodas traseiras)
@@ -50,13 +63,26 @@ public class KartController : MonoBehaviour
         FWheels[0] = FRWheel;
         FWheels[1] = FLWheel;
 
+        FWheels_tr = new Transform[2];
+        FWheels_tr[0] = FRWheel_tr;
+        FWheels_tr[1] = FLWheel_tr;
+
         BWheels = new WheelCollider[2];
         BWheels[0] = BRWheel;
         BWheels[1] = BLWheel;
 
+        BWheels_tr = new Transform[2];
+        BWheels_tr[0] = BRWheel_tr;
+        BWheels_tr[1] = BLWheel_tr;
+
         //Salva o rigidbody do objeto para poder acessa-lo sem precisar procura-lo dentre seus componentes
         rb = GetComponent<Rigidbody>();
         rb.centerOfMass = new Vector3(0, centroDeMassaY, 0);
+         visualKart = transform.Find("Visual");
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift)) DriftStart();
     }
     private void FixedUpdate()
     {
@@ -107,10 +133,11 @@ public class KartController : MonoBehaviour
             //Foreach = Para cada WheelCollider dentro de FWheels aplicar scripts dentro
             //steerAngle eh multiplicado pelo inputAxis para definir sua direção visto que os valores possiveis de inputAxis são -1,0 e 1
             wheelCollider.steerAngle = inputAxis * steerAngle;
-            //salva o transform do visual das rodas para facil acesso depois 
-            Transform visual = wheelCollider.transform.parent.Find("Visual");
+        }
+        foreach(Transform tr in FWheels_tr)
+        {
             //aplica uma rotacao local, rotação baseada na rotação do objeto aplicado Ex: obejto parente tem rotação de 30 no eixo X o objeto filho ao aplicar um valor de rotacao local de 10 no eixo X, tera como seu angulo final a rotação de 40
-            visual.localRotation = Quaternion.Euler(new Vector3(visual.rotation.x, 270 + steerAngle * inputAxis, visual.rotation.z));
+            tr.localRotation = Quaternion.Euler(new Vector3(tr.rotation.x, 270 + steerAngle * inputAxis, tr.rotation.z));
             //Aplicando a ele a rotação atual dele de X e Z, apenas modificando a de Y, 270 sendo o centro dentre os pontos maximos deles e adicionando a rotação do angulo atual para o visual da roda 
         }
     }
@@ -139,15 +166,13 @@ public class KartController : MonoBehaviour
     private void SpinWheel(float VerticalInputAxis)
     {
         //Aplica a cada roda uma rotação adicional baseada no input do jogador em sua direção oposta simulando o movimento do carro 
-        foreach (WheelCollider wheelCollider in BWheels)
+        foreach(Transform tr in BWheels_tr)
         {
-            Transform visual = wheelCollider.transform.parent.Find("Visual");
-            visual.Rotate(new Vector3(0, 0, -VerticalInputAxis));
+            tr.Rotate(new Vector3(0, 0, -VerticalInputAxis));
         }
-        foreach (WheelCollider wheelCollider in FWheels)
+        foreach(Transform tr in FWheels_tr)
         {
-            Transform visual = wheelCollider.transform.parent.Find("Visual");
-            visual.Rotate(new Vector3(0, 0, -VerticalInputAxis));
+            tr.Rotate(new Vector3(0, 0, -VerticalInputAxis));
         }
     }
     /// <summary>
@@ -164,6 +189,8 @@ public class KartController : MonoBehaviour
         {
             if (wheelCollider.isGrounded) percentage += 1;
         }
+        if (percentage / 4 == 1) grounded = true;
+        else grounded = false;
         return percentage / 4;
     }
     ///<summary>
@@ -171,7 +198,7 @@ public class KartController : MonoBehaviour
     ///</summary>
     private void DriftStart()
     {
-        if (FLWheel.steerAngle != 0 && drifting == null && GroundedPercentage)
+        if (FLWheel.steerAngle != 0 && drifting == null && grounded)
         {
             drifting = StartCoroutine(Drifting());
         }
@@ -180,26 +207,49 @@ public class KartController : MonoBehaviour
     private IEnumerator Drifting()
     {
         //Aplica as modificações para permitir drift
+
+        float originalSteerAngle = steerAngle;
+        steerAngle = steerAngle + driftAngle;
+
+        float angleDelta = driftAngle * FLWheel.steerAngle / Mathf.Abs(FLWheel.steerAngle);
+        visualKart.Rotate(new Vector3(0, angleDelta, 0));
         float tempoDriftando = 0;
-        while (Input.GetKey(KeyCode.LeftShift))
+        while (Input.GetKey(KeyCode.LeftShift) && FLWheel.steerAngle != 0)
         {
             Debug.Log("Driftando");
             tempoDriftando += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
+        steerAngle = originalSteerAngle;
+        visualKart.Rotate(new Vector3(0, -angleDelta, 0));
+
+
         //Apos drift salva o tempo driftado para calcular a força do boost aplicado ao jogador 
         Debug.Log("Aplica o debuff");
         float driftBoost;
         if (tempoDriftando / driftTempoDeCarga < 1)
         {
             driftBoost = driftBoostMinimo + tempoDriftando / driftTempoDeCarga * (driftBoostMaximo - driftBoostMinimo);
+            
         }
         else
         {
             driftBoost = driftBoostMaximo;
         }
-        //rb.AddForce...
-        drifting = null;
+        StartCoroutine(BoostDrift(driftBoost));
         yield break;
+    }
+    private IEnumerator BoostDrift(float originalForce)
+    {
+        float timer=0;
+        float boostForce = originalForce; 
+        while(timer<driftBoostDuration)
+        {
+            rb.AddForce(transform.forward* boostForce * Time.fixedDeltaTime);
+            boostForce -= originalForce / (driftBoostDuration / 0.02f);
+            timer += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        drifting = null;
     }
 }
