@@ -7,6 +7,6 @@ public class KartBoostKeySpin : MonoBehaviour
     [SerializeField] float spinPerTick;
     private void FixedUpdate()
     {
-        transform.Rotate(new Vector3(0, 0, spinPerTick));
+        transform.Rotate(0, 0, spinPerTick*Time.fixedDeltaTime);
     }
 }
