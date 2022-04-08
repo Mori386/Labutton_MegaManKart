@@ -4,21 +4,20 @@ using UnityEngine;
 
 public class MineScriptV1 : MonoBehaviour
 {
-    [SerializeField] private bool explodeCheck = false;
+    private bool explodeCheck = false;
     private MeshRenderer r;
     private BoxCollider boxCollider;
     ParticleSystem particleSys;
-    private void Start()
-    {
-        Invoke("turnOn", 1);
-    }
     void Awake()
     {
         r = GetComponent<MeshRenderer>();
         boxCollider = GetComponent<BoxCollider>();
         particleSys = GetComponent<ParticleSystem>();
     }
-
+    private void Start()
+    {
+        Invoke("turnOn", 1);
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (explodeCheck == true && other.tag=="Player")
@@ -26,7 +25,7 @@ public class MineScriptV1 : MonoBehaviour
             r.enabled = false;
             boxCollider.enabled = false;
             particleSys.Play();
-            //TODO adicionar debuff
+            Debuff.Instance.AplicarDebuff(other.gameObject);
             other.GetComponent<ParticleSystem>().Play();
             Invoke("selfDestroy", 1);
         }

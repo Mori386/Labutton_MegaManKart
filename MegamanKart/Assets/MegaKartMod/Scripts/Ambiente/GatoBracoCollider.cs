@@ -6,7 +6,7 @@ public class GatoBracoCollider : MonoBehaviour
 {
     private void Start()
     {
-        DebuffPlayer.Instance.objetosAtravesaveis.Add(gameObject);
+        Debuff.Instance.objetosAtravesaveis.Add(gameObject);
     }
     void OnCollisionEnter(Collision collision)
     {
@@ -17,7 +17,7 @@ public class GatoBracoCollider : MonoBehaviour
                 ContactPoint contact = collision.contacts[0];
                 if (Vector3.Dot(contact.normal, Vector3.up) > 0.5)
                 {
-                    DebuffPlayer.Instance.AplicarDebuff();
+                    Debuff.Instance.AplicarDebuff(collision.gameObject);
                 }
             }
         }

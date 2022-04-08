@@ -21,9 +21,11 @@ public class BladeScript : MonoBehaviour
     private void autoDestroy()
     {
         Transform trail = transform.parent.Find("Trail");
+        GameObject parent = trail.parent.gameObject;
         trail.parent = null;
+        trail.GetComponent<TrailFollow>().enabled = false;
+        Destroy(parent);
         trail.GetComponent<TrailRenderer>().autodestruct = true;
-        trail.GetComponent<TrailBlade>().enabled = false;
         Destroy(gameObject);
     }
 }

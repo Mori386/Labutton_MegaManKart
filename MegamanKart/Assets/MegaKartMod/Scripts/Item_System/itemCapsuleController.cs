@@ -15,9 +15,8 @@ public class itemCapsuleController : MonoBehaviour
     {
         spawnPosition = transform.position;
         capsuleCollider = GetComponent<CapsuleCollider>();
-        questionMark = GameObject.Find("questionMark");
+        questionMark = transform.Find("questionMark").gameObject ;
     }
-
     private void FixedUpdate()
     {
         float y = Mathf.PingPong(Time.time * moveSpeed, 0.2f);
@@ -31,6 +30,26 @@ public class itemCapsuleController : MonoBehaviour
         if (other.tag == "Player")
         {
             //Após o trigger, é chamado a função goneController, que desativara o render de mesh e o collider. Apos um delay, essa função sera chamada mais uma vez pra reativar o collider e o render.
+            KartPowerUpManager powerUpManager = other.GetComponent<KartPowerUpManager>();
+            int r = Random.Range(1, 6);
+            Debug.Log(r);
+            switch (r)
+            {
+                case 1:powerUpManager.PickUpPowerUp(KartPowerUpManager.listPowerUps.Missel);
+                    break;
+                case 2:
+                    powerUpManager.PickUpPowerUp(KartPowerUpManager.listPowerUps.Blade);
+                    break;
+                case 3:
+                    powerUpManager.PickUpPowerUp(KartPowerUpManager.listPowerUps.Shield);
+                    break;
+                case 4:
+                    powerUpManager.PickUpPowerUp(KartPowerUpManager.listPowerUps.LandMine);
+                    break;
+                case 5:
+                    powerUpManager.PickUpPowerUp(KartPowerUpManager.listPowerUps.Hack);
+                    break;
+            }
             goneController();
             Invoke("goneController", spawnDelay);
         }

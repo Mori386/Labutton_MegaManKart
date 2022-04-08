@@ -31,6 +31,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 501600166143235485}
+  - {fileID: 6580923234562148424}
   m_Father: {fileID: 107158182896695376}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -48,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 4
   spinPerTick: 300
-  speed: 20
+  speed: 40
 --- !u!54 &107158182053059298
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -76,8 +77,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.08972931, y: 1.7341251, z: 1.8774724}
-  m_Center: {x: -0.0014400482, y: 0.07372975, z: 0.011983633}
+  m_Size: {x: 0.08972931, y: 0.15300107, z: 1.8774724}
+  m_Center: {x: -0.0014400482, y: -0.7168323, z: 0.011983633}
 --- !u!1 &107158182896695377
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,7 +121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 107158183795354242}
   - component: {fileID: 107158183795354241}
-  - component: {fileID: 107158183795354240}
+  - component: {fileID: 9185716560297003913}
   m_Layer: 0
   m_Name: Trail
   m_TagString: Untagged
@@ -249,7 +250,7 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!114 &107158183795354240
+--- !u!114 &9185716560297003913
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -261,7 +262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09ed68af64e87fd43b4e66dafb5255b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blade: {fileID: 107158182053059293}
+  followObject: {fileID: 107158182053059293}
 --- !u!1 &990187311458078503
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,7 +288,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 990187311458078503}
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 107.55362, y: 107.553604, z: 14.519737}
   m_Children: []
@@ -343,3 +344,60 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &8199391094087227944
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6580923234562148424}
+  - component: {fileID: 4161654485957127520}
+  - component: {fileID: 2338650490890579920}
+  m_Layer: 0
+  m_Name: HitBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6580923234562148424
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8199391094087227944}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 107158182053059293}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4161654485957127520
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8199391094087227944}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.08972931, y: 1.0685707, z: 1.8774724}
+  m_Center: {x: -0.0014400482, y: 0.40650696, z: 0.011983633}
+--- !u!114 &2338650490890579920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8199391094087227944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f8ac92d77e31144689d50dc7d9c7291, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

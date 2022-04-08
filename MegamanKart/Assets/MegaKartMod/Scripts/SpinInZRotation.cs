@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KartBoostKeySpin : MonoBehaviour
+public class SpinInZRotation : MonoBehaviour
 {
     [SerializeField] float spinPerTick;
     private void FixedUpdate()

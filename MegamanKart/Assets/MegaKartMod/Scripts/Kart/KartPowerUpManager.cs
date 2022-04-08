@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class KartPowerUpManager : MonoBehaviour
 {
     [SerializeField] int maximoDeItensCarregados;
+    [SerializeField] Transform castFrontPositionTransform;
+    [SerializeField] Transform castBackPositionTransform;
+    [SerializeField] Image powerUpAtualImagem;
     public enum listPowerUps
     {
         Empty = 0,
@@ -23,27 +27,40 @@ public class KartPowerUpManager : MonoBehaviour
             powerUpsAtuais[i] = listPowerUps.Empty;
         }
     }
+    private void Update()
+    {
+        if(powerUpsAtuais[0]!=0&&Input.GetKeyDown(KeyCode.E))
+        {
+            PowerUpUse();
+        }
+    }
     public void UpdatePowerupUse()
     {
         switch ((int)powerUpsAtuais[0])
         {
             case 0:
                 PowerUpUse = null;
+                powerUpAtualImagem.sprite = null;
                 break;
             case 1:
                 PowerUpUse = MisselUse;
+                powerUpAtualImagem.sprite = ManagerPowerUps.Instance.Img_Missel;
                 break;
             case 2:
                 PowerUpUse = BladeUse;
+                powerUpAtualImagem.sprite = ManagerPowerUps.Instance.Img_Blade;
                 break;
             case 3:
-                PowerUpUse = BladeUse;
+                PowerUpUse = ShieldUse;
+                powerUpAtualImagem.sprite = ManagerPowerUps.Instance.Img_Shield;
                 break;
             case 4:
                 PowerUpUse = LandMineUse;
+                powerUpAtualImagem.sprite = ManagerPowerUps.Instance.Img_LandMine;
                 break;
             case 5:
                 PowerUpUse = HackUse;
+                powerUpAtualImagem.sprite = ManagerPowerUps.Instance.Img_Hack;
                 break;
         }
     }
@@ -66,25 +83,58 @@ public class KartPowerUpManager : MonoBehaviour
                 break;
             }
         }
+        UpdatePowerupUse();
     }
     public void MisselUse()
     {
-
+        Transform target = null;
+        foreach(KartInfos kartInfos in ManagerPowerUps.Instance.kartList)
+        {
+            if (kartInfos.kartObject != gameObject)
+            {
+                if (kartInfos.kartPlaceInRace == GetComponent<KartController>().placeInRace - 1)
+                {
+                    target = kartInfos.kartObject.transform;
+                    GameObject missel = Instantiate(ManagerPowerUps.Instance.prefabMissel, castFrontPositionTransform.position, Quaternion.Euler(0, transform.eulerAngles.y, 0));
+                    missel.transform.Rotate(0, transform.rotation.y, 0);
+                    missel.transform.Find("MisselPowerControl").GetComponent<MisselScript>().target = target;
+                    powerUpsAtuais[0] = 0;
+                    powerUpAtualImagem.sprite = null;
+                }
+            }
+        }
+        if(target == null)
+        {
+            Debug.Log("No target");
+        }
     }
     public void BladeUse()
     {
-
+        GameObject blade =
+        Instantiate(ManagerPowerUps.Instance.prefabBlade, castFrontPositionTransform.position, Quaternion.Euler(0,transform.eulerAngles.y,0));
+        powerUpsAtuais[0] = 0;
+        powerUpAtualImagem.sprite = null;
     }
     public void ShieldUse()
     {
-
+        ShieldScript shieldScript = Instantiate(ManagerPowerUps.Instance.prefabShield).GetComponent<ShieldScript>();
+        shieldScript.followTransform = transform;
+        KartController kartController = GetComponent<KartController>();
+        shieldScript.controller = kartController;
+        kartController.isShielded = true;
+        powerUpsAtuais[0] = 0;
+        powerUpAtualImagem.sprite = null;
     }
     public void LandMineUse()
     {
-
+        Instantiate(ManagerPowerUps.Instance.prefabLandMine, castBackPositionTransform.position, Quaternion.identity);
+        powerUpsAtuais[0] = 0;
+        powerUpAtualImagem.sprite = null;
     }
     public void HackUse()
     {
-
+        HackControl.Instance.TurnOnHackScreen();
+        powerUpsAtuais[0] = 0;
+        powerUpAtualImagem.sprite = null;
     }
 }

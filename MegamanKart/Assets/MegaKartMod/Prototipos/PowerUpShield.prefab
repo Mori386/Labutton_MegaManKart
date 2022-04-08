@@ -172,3 +172,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spinPerTick: 50
+  followTransform: {fileID: 0}
+  duration: 4

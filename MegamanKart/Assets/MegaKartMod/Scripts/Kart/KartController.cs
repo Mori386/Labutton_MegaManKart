@@ -59,6 +59,12 @@ public class KartController : MonoBehaviour
     bool grounded = true;
 
     Transform visualKart;
+
+    [SerializeField] public int placeInRace;
+
+    [System.NonSerialized] public bool debuffApplicado;
+
+    [System.NonSerialized] public bool isShielded;
     private void Awake()
     {
         //Adiciona ambas rodas a seus devidos grupos, para facilitar referienciar(todas rodas frontais e todas rodas traseiras)
@@ -82,6 +88,16 @@ public class KartController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.centerOfMass = new Vector3(0, centroDeMassaY, 0);
         visualKart = transform.Find("Visual");
+    }
+    private void Start()
+    {
+        KartInfos thisKartInfo = new KartInfos
+        {
+            kartObject = gameObject,
+            kartPlaceInRace = placeInRace,
+
+        };
+        ManagerPowerUps.Instance.kartList.Add(thisKartInfo);
     }
     private void Update()
     {
