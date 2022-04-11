@@ -541,11 +541,12 @@ MonoBehaviour:
     type: 3}
   prefabLandMine: {fileID: 2438328097612516915, guid: 60792352e24b2c74c850ff3677098f34,
     type: 3}
-  Img_Missel: {fileID: 21300000, guid: c5fbe83f966eb4249b1ff6c91f69afe1, type: 3}
-  Img_Shield: {fileID: 21300000, guid: b52e43781ddaa5d49a403744e8de4629, type: 3}
-  Img_Blade: {fileID: 21300000, guid: 1d410443437f858418b5f425098bb36b, type: 3}
-  Img_LandMine: {fileID: 21300000, guid: b061299b55d7b8f41b3555f1b34c21b8, type: 3}
-  Img_Hack: {fileID: 21300000, guid: 3dfd2e86b99fb2541b62c29cb4098b93, type: 3}
+  Img_Empty: {fileID: 21300000, guid: 8b4cde7985c6fdb4aa9ca89cda6d32c2, type: 3}
+  Img_Missel: {fileID: 21300000, guid: 8df10cf097621bb46a8a19e4d29b2df1, type: 3}
+  Img_Shield: {fileID: 21300000, guid: 2d482685855fe3243ae7d376007605ee, type: 3}
+  Img_Blade: {fileID: 21300000, guid: 306969032e2aa6744bff44e1a0361b12, type: 3}
+  Img_LandMine: {fileID: 21300000, guid: 66541c3eb6e8d7942abd5be4d6b05c1b, type: 3}
+  Img_Hack: {fileID: 21300000, guid: 3e3a67f4293dd01499bbe2c891d51df6, type: 3}
 --- !u!1 &222847412
 GameObject:
   m_ObjectHideFlags: 0
@@ -4095,7 +4096,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 8b4cde7985c6fdb4aa9ca89cda6d32c2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

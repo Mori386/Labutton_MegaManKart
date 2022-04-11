@@ -9,6 +9,7 @@ public class ManagerPowerUps : MonoBehaviour
     public GameObject prefabBlade;
     public GameObject prefabLandMine;
 
+    public Sprite Img_Empty;
     public Sprite Img_Missel;
     public Sprite Img_Shield;
     public Sprite Img_Blade;

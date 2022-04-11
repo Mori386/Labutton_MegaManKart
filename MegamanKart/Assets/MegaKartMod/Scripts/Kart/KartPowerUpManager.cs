@@ -40,7 +40,7 @@ public class KartPowerUpManager : MonoBehaviour
         {
             case 0:
                 PowerUpUse = null;
-                powerUpAtualImagem.sprite = null;
+                powerUpAtualImagem.sprite = ManagerPowerUps.Instance.Img_Empty;
                 break;
             case 1:
                 PowerUpUse = MisselUse;
@@ -99,7 +99,7 @@ public class KartPowerUpManager : MonoBehaviour
                     missel.transform.Rotate(0, transform.rotation.y, 0);
                     missel.transform.Find("MisselPowerControl").GetComponent<MisselScript>().target = target;
                     powerUpsAtuais[0] = 0;
-                    powerUpAtualImagem.sprite = null;
+                    powerUpAtualImagem.sprite = ManagerPowerUps.Instance.Img_Empty; ;
                 }
             }
         }
@@ -113,7 +113,7 @@ public class KartPowerUpManager : MonoBehaviour
         GameObject blade =
         Instantiate(ManagerPowerUps.Instance.prefabBlade, castFrontPositionTransform.position, Quaternion.Euler(0,transform.eulerAngles.y,0));
         powerUpsAtuais[0] = 0;
-        powerUpAtualImagem.sprite = null;
+        powerUpAtualImagem.sprite = ManagerPowerUps.Instance.Img_Empty; ;
     }
     public void ShieldUse()
     {
@@ -123,18 +123,18 @@ public class KartPowerUpManager : MonoBehaviour
         shieldScript.controller = kartController;
         kartController.isShielded = true;
         powerUpsAtuais[0] = 0;
-        powerUpAtualImagem.sprite = null;
+        powerUpAtualImagem.sprite = ManagerPowerUps.Instance.Img_Empty; ;
     }
     public void LandMineUse()
     {
         Instantiate(ManagerPowerUps.Instance.prefabLandMine, castBackPositionTransform.position, Quaternion.identity);
         powerUpsAtuais[0] = 0;
-        powerUpAtualImagem.sprite = null;
+        powerUpAtualImagem.sprite = ManagerPowerUps.Instance.Img_Empty; ;
     }
     public void HackUse()
     {
         HackControl.Instance.TurnOnHackScreen();
         powerUpsAtuais[0] = 0;
-        powerUpAtualImagem.sprite = null;
+        powerUpAtualImagem.sprite = ManagerPowerUps.Instance.Img_Empty; ;
     }
 }
