@@ -6,7 +6,12 @@ using UnityEngine.EventSystems;
 
 public class RenderControl : MonoBehaviour
 {
+    public static RenderControl Instance;
     public List<GameObject> kartRenders;
+    private void Awake()
+    {
+        Instance = this;
+    }
     private void FixedUpdate()
     {
         IsMouseOverUIElement();
