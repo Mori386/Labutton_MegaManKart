@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311947, g: 0.38074005, b: 0.35872722, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -352,8 +352,8 @@ GameObject:
   - component: {fileID: 64416210}
   - component: {fileID: 64416212}
   - component: {fileID: 64416211}
-  - component: {fileID: 64416214}
   - component: {fileID: 64416213}
+  - component: {fileID: 64416215}
   m_Layer: 5
   m_Name: Kart1
   m_TagString: Untagged
@@ -475,7 +475,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &64416214
+--- !u!114 &64416215
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -484,9 +484,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 64416209}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd9f569bda9380e468cc56bc6b83bfad, type: 3}
+  m_Script: {fileID: 11500000, guid: f0c0799cd78e0654e9becdf7f552b2da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  kartRendered: {fileID: 2227732825910331649}
 --- !u!1 &124428581
 GameObject:
   m_ObjectHideFlags: 0
@@ -1498,6 +1499,7 @@ GameObject:
   m_Component:
   - component: {fileID: 563715804}
   - component: {fileID: 563715803}
+  - component: {fileID: 563715805}
   m_Layer: 5
   m_Name: ButtonsSelectScreenManager
   m_TagString: Untagged
@@ -1531,6 +1533,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &563715805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 563715802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd9f569bda9380e468cc56bc6b83bfad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kartRenders:
+  - {fileID: 2227732825910331649}
+  - {fileID: 5202640371253829442}
+  - {fileID: 8774661321630647598}
+  - {fileID: 4338924498151530095}
 --- !u!1 &663808152
 GameObject:
   m_ObjectHideFlags: 0
@@ -1689,6 +1708,7 @@ GameObject:
   - component: {fileID: 1006687195}
   - component: {fileID: 1006687194}
   - component: {fileID: 1006687196}
+  - component: {fileID: 1006687197}
   m_Layer: 5
   m_Name: Kart2
   m_TagString: Untagged
@@ -1810,6 +1830,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1006687197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1006687192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0c0799cd78e0654e9becdf7f552b2da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kartRendered: {fileID: 5202640371253829442}
 --- !u!1 &1104580884
 GameObject:
   m_ObjectHideFlags: 0
@@ -2242,6 +2275,7 @@ GameObject:
   - component: {fileID: 1249366458}
   - component: {fileID: 1249366457}
   - component: {fileID: 1249366456}
+  - component: {fileID: 1249366459}
   m_Layer: 5
   m_Name: Kart4
   m_TagString: Untagged
@@ -2363,6 +2397,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1249366454}
   m_CullTransparentMesh: 1
+--- !u!114 &1249366459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249366454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0c0799cd78e0654e9becdf7f552b2da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kartRendered: {fileID: 4338924498151530095}
 --- !u!1 &1326042397
 GameObject:
   m_ObjectHideFlags: 0
@@ -4431,6 +4478,7 @@ GameObject:
   - component: {fileID: 2107697554}
   - component: {fileID: 2107697553}
   - component: {fileID: 2107697552}
+  - component: {fileID: 2107697555}
   m_Layer: 5
   m_Name: Kart3
   m_TagString: Untagged
@@ -4552,6 +4600,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2107697550}
   m_CullTransparentMesh: 1
+--- !u!114 &2107697555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107697550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0c0799cd78e0654e9becdf7f552b2da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kartRendered: {fileID: 8774661321630647598}
 --- !u!1 &2115735107
 GameObject:
   m_ObjectHideFlags: 0
@@ -5185,6 +5246,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1558720044092658619}
+  - component: {fileID: 2227732825910331650}
   m_Layer: 5
   m_Name: KartRenderPadrao
   m_TagString: Untagged
@@ -5192,6 +5254,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!114 &2227732825910331650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2227732825910331649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcb7d58361c3c2f45a6a7ba9cc11a541, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: {x: 0, y: 0.1, z: 0}
 --- !u!33 &2392583197751672321
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5745,6 +5820,7 @@ GameObject:
   - component: {fileID: 3998392155700692181}
   - component: {fileID: 59391144776207216}
   - component: {fileID: 2825455332210278330}
+  - component: {fileID: 4338924498151530096}
   m_Layer: 5
   m_Name: KartRenderBoost
   m_TagString: Untagged
@@ -5752,6 +5828,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!114 &4338924498151530096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4338924498151530095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcb7d58361c3c2f45a6a7ba9cc11a541, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: {x: 0, y: 0.1, z: 0}
 --- !u!23 &4390421121857576704
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5927,6 +6016,7 @@ GameObject:
   - component: {fileID: 4861826523486782968}
   - component: {fileID: 8419328748038359645}
   - component: {fileID: 5995278097717362327}
+  - component: {fileID: 5202640371253829443}
   m_Layer: 5
   m_Name: KartRenderSpeed
   m_TagString: Untagged
@@ -5934,6 +6024,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!114 &5202640371253829443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5202640371253829442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcb7d58361c3c2f45a6a7ba9cc11a541, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: {x: 0, y: 0.1, z: 0}
 --- !u!33 &5306382764681183102
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -6757,7 +6860,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8774661321630647598}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalRotation: {x: -0.7069834, y: 0, z: 0, w: 0.7072302}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5400, y: 5400.0005, z: 5400.0005}
   m_Children:
@@ -6770,7 +6873,7 @@ Transform:
   - {fileID: 1011933526874719862}
   m_Father: {fileID: 2002366517}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
 --- !u!33 &8322693777205869049
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -6922,6 +7025,7 @@ GameObject:
   - component: {fileID: 8254547638638600084}
   - component: {fileID: 4981492196648210481}
   - component: {fileID: 7117138265870181627}
+  - component: {fileID: 8774661321630647599}
   m_Layer: 5
   m_Name: KartRenderBulky
   m_TagString: Untagged
@@ -6929,6 +7033,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!114 &8774661321630647599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8774661321630647598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcb7d58361c3c2f45a6a7ba9cc11a541, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: {x: 0, y: 0, z: 0.1}
 --- !u!33 &8831541917771144059
 MeshFilter:
   m_ObjectHideFlags: 0

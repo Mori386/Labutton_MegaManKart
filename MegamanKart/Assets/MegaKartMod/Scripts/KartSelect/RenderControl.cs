@@ -6,46 +6,30 @@ using UnityEngine.EventSystems;
 
 public class RenderControl : MonoBehaviour
 {
-    int UILayer;
-
-    private void Start()
+    public List<GameObject> kartRenders;
+    private void FixedUpdate()
     {
-        UILayer = LayerMask.NameToLayer("UI");
+        IsMouseOverUIElement();
     }
-
-    private void Update()
+    private void IsMouseOverUIElement()
     {
-        print(IsPointerOverUIElement() ? "Over UI" : "Not over UI");
-    }
+        PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
+        pointerEventData.position = Input.mousePosition;
 
-
-    //Returns 'true' if we touched or hovering on Unity UI element.
-    public bool IsPointerOverUIElement()
-    {
-        return IsPointerOverUIElement(GetEventSystemRaycastResults());
-    }
-
-
-    //Returns 'true' if we touched or hovering on Unity UI element.
-    private bool IsPointerOverUIElement(List<RaycastResult> eventSystemRaysastResults)
-    {
-        for (int index = 0; index < eventSystemRaysastResults.Count; index++)
+        List<RaycastResult> raycastResults = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointerEventData, raycastResults);
+        for (int i = 0; i < raycastResults.Count; i++)
         {
-            RaycastResult curRaysastResult = eventSystemRaysastResults[index];
-            if (curRaysastResult.gameObject.layer == UILayer)
-                return true;
+            KartSelectInfos kartSelectInfos = raycastResults[i].gameObject.GetComponent<KartSelectInfos>();
+            if (kartSelectInfos != null)
+            {
+                kartSelectInfos.kartRendered.SetActive(true);
+                foreach(GameObject go in kartRenders)
+                {
+                    if(kartSelectInfos.kartRendered.gameObject != go) go.SetActive(false);
+                }
+            }
         }
-        return false;
     }
 
-
-    //Gets all event system raycast results of current mouse or touch position.
-    static List<RaycastResult> GetEventSystemRaycastResults()
-    {
-        PointerEventData eventData = new PointerEventData(EventSystem.current);
-        eventData.position = Input.mousePosition;
-        List<RaycastResult> raysastResults = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(eventData, raysastResults);
-        return raysastResults;
-    }
 }
