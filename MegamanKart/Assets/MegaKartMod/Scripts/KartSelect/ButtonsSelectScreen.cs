@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ButtonsSelectScreen : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class ButtonsSelectScreen : MonoBehaviour
     GameObject[] selectKartScreen_PlayerIcons;
     GameObject[] selectKartScreen_KartIcons;
     private int playerSelecting=0;
+
     private void Start()
     {
         GameObject canvas = GameObject.Find("Canvas");
@@ -23,10 +25,6 @@ public class ButtonsSelectScreen : MonoBehaviour
         for(int i = 0; i < players.childCount; i++)
         {
             selectKartScreen_PlayerIcons[i] = players.GetChild(i).gameObject;
-        }
-        foreach(GameObject p in selectKartScreen_PlayerIcons)
-        {
-            Debug.Log(p.name);  
         }
         selectKartScreen_KartIcons = new GameObject[4];
         for(int i =0;i<4;i++)
@@ -41,9 +39,22 @@ public class ButtonsSelectScreen : MonoBehaviour
         selectKartScreen_KartIcons[kartId - 1].GetComponent<Button>().enabled = false;
         KartSelectInfos kartSelectInfos = selectKartScreen_KartIcons[kartId - 1].GetComponent<KartSelectInfos>();
         RenderControl.Instance.kartRenders.Remove(kartSelectInfos.kartRendered);
-        kartSelectInfos.kartRendered.transform.localPosition = new Vector3(-700, -380, 0);
+        Vector3 position = Vector3.zero;
+        switch(playerSelecting)
+        {
+            case 0:position = new Vector3(-700, -380, 0);break;
+            case 1:position = new Vector3(-250, -380, 0);break;
+            case 2:position = new Vector3(250, -380, 0);break;
+            case 3:position = new Vector3(700, -380, 0); break;
+        }
+        kartSelectInfos.kartRendered.transform.localPosition = position;
+        kartSelectInfos.kartRendered.transform.localScale = kartSelectInfos.kartRendered.transform.localScale*0.8f;
         Destroy(kartSelectInfos);
         playerSelecting++;
+        if(playerSelecting > SelectScreenConfigs.Instance.playerAmmount-1)
+        {
+            SceneManager.LoadScene("MainScene 1");
+        }
     }
     public void PlayerAmmountSelect(int ammount)
     {
