@@ -65,6 +65,13 @@ public class KartController : MonoBehaviour
     [System.NonSerialized] public bool debuffApplicado;
 
     [System.NonSerialized] public bool isShielded;
+
+    public string axisRawVertical;
+    public string axisRawHorizontal;
+    public KeyCode brakeKey;
+    public KeyCode powerUpKey;
+
+    [System.NonSerialized] public int playerID;
     private void Awake()
     {
         //Adiciona ambas rodas a seus devidos grupos, para facilitar referienciar(todas rodas frontais e todas rodas traseiras)
@@ -99,17 +106,13 @@ public class KartController : MonoBehaviour
         };
         ManagerPowerUps.Instance.kartList.Add(thisKartInfo);
     }
-    private void Update()
-    {
-        if (driftWithShift && Input.GetKeyDown(KeyCode.LeftShift)) DriftStart();
-    }
     private void FixedUpdate()
     {
         //Input.GetAxisRaw("Vertical") pega um valor de -1 a 1, baseado no pressionar das teclas W e S ou setinhas cima e baixo, se caso nenhuma delas esteja pressionada o valor sera de 0 
-        BWheelsMotorTorqueInputAxis(Input.GetAxisRaw("Vertical"));
-        SpinWheel(Input.GetAxisRaw("Vertical"));
+        BWheelsMotorTorqueInputAxis(Input.GetAxisRaw(axisRawVertical));
+        SpinWheel(Input.GetAxisRaw(axisRawVertical));
         //Input.GetAxisRaw("Horizontal") pega um valor de -1 a 1, baseado no pressionar das teclas A e D ou setinhas esquerda e direita, se caso nenhuma delas esteja pressionada o valor sera de 0 
-        FWheelsSteerAngleInputAxis(Input.GetAxisRaw("Horizontal"));
+        FWheelsSteerAngleInputAxis(Input.GetAxisRaw(axisRawHorizontal));
         BreakUpdate();
         if (GroundedPercentage() < 1)
         {
@@ -166,7 +169,7 @@ public class KartController : MonoBehaviour
     private void BreakUpdate()
     {
         //booleano(true ou false), se caso a tecla Space estiver pressionada vai ser true e se n vai ser false
-        isBreaking = Input.GetKey(KeyCode.Space);
+        isBreaking = Input.GetKey(brakeKey);
         //define a força do breque atual baseado no booleano, se caso for true vai ser igual a brakeForce e se caso false 0
         float currentBrakeForce = isBreaking ? brakeForce : 0f;
         //aplica a todas rodas a força do breque atual

@@ -8,7 +8,9 @@ public class KartPowerUpManager : MonoBehaviour
     [SerializeField] int maximoDeItensCarregados;
     [SerializeField] Transform castFrontPositionTransform;
     [SerializeField] Transform castBackPositionTransform;
-    [SerializeField] Image powerUpAtualImagem;
+    public Image powerUpAtualImagem;
+
+    private KeyCode powerUpKey;
     public enum listPowerUps
     {
         Empty = 0,
@@ -27,9 +29,13 @@ public class KartPowerUpManager : MonoBehaviour
             powerUpsAtuais[i] = listPowerUps.Empty;
         }
     }
+    private void Start()
+    {
+        powerUpKey = GetComponent<KartController>().powerUpKey;
+    }
     private void Update()
     {
-        if(powerUpsAtuais[0]!=0&&Input.GetKeyDown(KeyCode.E))
+        if(powerUpsAtuais[0]!=0&&Input.GetKeyDown(powerUpKey))
         {
             PowerUpUse();
         }
@@ -133,7 +139,7 @@ public class KartPowerUpManager : MonoBehaviour
     }
     public void HackUse()
     {
-        HackControl.Instance.TurnOnHackScreen();
+        HackControl.Instance.TurnOnHackScreen(GetComponent<KartController>());
         powerUpsAtuais[0] = 0;
         powerUpAtualImagem.sprite = ManagerPowerUps.Instance.Img_Empty; ;
     }

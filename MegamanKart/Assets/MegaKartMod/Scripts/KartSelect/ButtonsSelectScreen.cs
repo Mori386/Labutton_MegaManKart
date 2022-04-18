@@ -35,9 +35,9 @@ public class ButtonsSelectScreen : MonoBehaviour
     public void KartSelect(int kartId)
     {
         SelectScreenConfigs.Instance.kartIDPlayer[playerSelecting] = kartId;
-        selectKartScreen_KartIcons[kartId - 1].GetComponent<Image>().color = Color.black;
-        selectKartScreen_KartIcons[kartId - 1].GetComponent<Button>().enabled = false;
-        KartSelectInfos kartSelectInfos = selectKartScreen_KartIcons[kartId - 1].GetComponent<KartSelectInfos>();
+        selectKartScreen_KartIcons[kartId].GetComponent<Image>().color = Color.black;
+        selectKartScreen_KartIcons[kartId].GetComponent<Button>().enabled = false;
+        KartSelectInfos kartSelectInfos = selectKartScreen_KartIcons[kartId].GetComponent<KartSelectInfos>();
         RenderControl.Instance.kartRenders.Remove(kartSelectInfos.kartRendered);
         Vector3 position = Vector3.zero;
         switch(playerSelecting)

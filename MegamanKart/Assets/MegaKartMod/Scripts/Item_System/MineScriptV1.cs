@@ -26,7 +26,7 @@ public class MineScriptV1 : MonoBehaviour
             boxCollider.enabled = false;
             particleSys.Play();
             Debuff.Instance.AplicarDebuff(other.gameObject);
-            other.GetComponent<ParticleSystem>().Play();
+            if(other.GetComponent<ParticleSystem>()) other.GetComponent<ParticleSystem>().Play();
             Invoke("selfDestroy", 1);
         }
     }
