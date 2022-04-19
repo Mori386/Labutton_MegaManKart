@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CheckPoint : MonoBehaviour
 {
+    [System.NonSerialized] public int checkPointOrder;
     private void Start()
     {
         GameObject visual = transform.GetChild(0).gameObject;
@@ -20,7 +21,19 @@ public class CheckPoint : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            print("a");
+            KartController kart = other.GetComponent<KartController>();
+            if (kart.checkPointStage == checkPointOrder)
+            {
+                CoopManager.Instance.TurnOnNextCP(kart);
+            }
         }
+    }
+    public void DisableChild(int childIdNum)
+    {
+        transform.GetChild(childIdNum).gameObject.SetActive(false);
+    }
+    public void EnableChild(int childIdNum)
+    {
+        transform.GetChild(childIdNum).gameObject.SetActive(true);
     }
 }

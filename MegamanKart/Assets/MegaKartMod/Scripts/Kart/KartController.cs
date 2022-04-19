@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEditor.SceneManagement;
+using TMPro;
 
 public class KartController : MonoBehaviour
 {
@@ -74,8 +75,8 @@ public class KartController : MonoBehaviour
 
     [System.NonSerialized] public int playerID;
 
-    [System.NonSerialized] public Image placeInRaceImage;
-    [System.NonSerialized] public int checkPointStage;
+    [System.NonSerialized] public TextMeshProUGUI placeInRaceText;
+    [System.NonSerialized] public int checkPointStage=0;
     private void Awake()
     {
         //Adiciona ambas rodas a seus devidos grupos, para facilitar referienciar(todas rodas frontais e todas rodas traseiras)
@@ -277,5 +278,10 @@ public class KartController : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
         drifting = null;
+    }
+
+    public void UpdateTextBoxPlaceInRace(int placeInRace)
+    {
+        placeInRaceText.text = placeInRace.ToString();
     }
 }

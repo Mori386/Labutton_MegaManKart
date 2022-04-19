@@ -32,7 +32,6 @@ public class itemCapsuleController : MonoBehaviour
             //Após o trigger, é chamado a função goneController, que desativara o render de mesh e o collider. Apos um delay, essa função sera chamada mais uma vez pra reativar o collider e o render.
             KartPowerUpManager powerUpManager = other.GetComponent<KartPowerUpManager>();
             int r = Random.Range(1, 6);
-            Debug.Log(r);
             switch (r)
             {
                 case 1:powerUpManager.PickUpPowerUp(KartPowerUpManager.listPowerUps.Missel);

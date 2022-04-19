@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Cinemachine;
+using TMPro;
 
 public class CoopManager : MonoBehaviour
 {
@@ -23,13 +24,14 @@ public class CoopManager : MonoBehaviour
     private void Start()
     {
         checkPoints = new CheckPoint[checkPointParent.transform.childCount];
-        for(int i = 0; i < checkPointParent.transform.childCount; i++)
+        for (int i = 0; i < checkPointParent.transform.childCount; i++)
         {
             checkPoints[i] = checkPointParent.transform.GetChild(i).GetComponent<CheckPoint>();
+            checkPoints[i].checkPointOrder = i;
         }
-        for(int i = 1; i < checkPoints.Length; i++)
+        for (int i = 1; i < checkPoints.Length; i++)
         {
-            for(int j = 0; j < checkPoints[i].transform.childCount; j++)
+            for (int j = 0; j < checkPoints[i].transform.childCount; j++)
             {
                 checkPoints[i].transform.GetChild(j).gameObject.SetActive(false);
             }
@@ -142,7 +144,7 @@ public class CoopManager : MonoBehaviour
                 karts[0].GetComponent<KartPowerUpManager>().powerUpAtualImagem = PwUp_TopRight.GetComponent<Image>();
 
                 //placeInRaceImage
-                karts[0].placeInRaceImage = PlaceInRace_TopLeft.GetComponent<Image>();
+                karts[0].placeInRaceText = PlaceInRace_TopLeft.GetComponent<TextMeshProUGUI>();
 
                 PlaceInRace_BottomLeft.gameObject.SetActive(false);
                 PlaceInRace_BottomRight.gameObject.SetActive(false);
@@ -159,8 +161,8 @@ public class CoopManager : MonoBehaviour
                 karts[1].GetComponent<KartPowerUpManager>().powerUpAtualImagem = PwUp_BottomRight.GetComponent<Image>();
 
                 //placeInRaceImage
-                karts[0].placeInRaceImage = PlaceInRace_TopLeft.GetComponent<Image>();
-                karts[1].placeInRaceImage = PlaceInRace_BottomLeft.GetComponent<Image>();
+                karts[0].placeInRaceText = PlaceInRace_TopLeft.GetComponent<TextMeshProUGUI>();
+                karts[1].placeInRaceText = PlaceInRace_BottomLeft.GetComponent<TextMeshProUGUI>();
 
                 PlaceInRace_BottomRight.gameObject.SetActive(false);
                 PlaceInRace_TopRight.gameObject.SetActive(false);
@@ -176,9 +178,9 @@ public class CoopManager : MonoBehaviour
                 karts[2].GetComponent<KartPowerUpManager>().powerUpAtualImagem = PwUp_BottomRight.GetComponent<Image>();
 
                 //placeInRaceImage
-                karts[0].placeInRaceImage = PlaceInRace_TopLeft.GetComponent<Image>();
-                karts[1].placeInRaceImage = PlaceInRace_BottomLeft.GetComponent<Image>();
-                karts[2].placeInRaceImage = PlaceInRace_BottomRight.GetComponent<Image>();
+                karts[0].placeInRaceText = PlaceInRace_TopLeft.GetComponent<TextMeshProUGUI>();
+                karts[1].placeInRaceText = PlaceInRace_BottomLeft.GetComponent<TextMeshProUGUI>();
+                karts[2].placeInRaceText = PlaceInRace_BottomRight.GetComponent<TextMeshProUGUI>();
 
                 PlaceInRace_TopRight.gameObject.SetActive(false);
                 break;
@@ -194,19 +196,56 @@ public class CoopManager : MonoBehaviour
                 karts[3].GetComponent<KartPowerUpManager>().powerUpAtualImagem = PwUp_BottomRight.GetComponent<Image>();
 
                 //placeInRaceImage
-                karts[0].placeInRaceImage = PlaceInRace_TopLeft.GetComponent<Image>();
-                karts[1].placeInRaceImage = PlaceInRace_TopRight.GetComponent<Image>();
-                karts[2].placeInRaceImage = PlaceInRace_BottomLeft.GetComponent<Image>();
-                karts[3].placeInRaceImage = PlaceInRace_BottomRight.GetComponent<Image>();
+                karts[0].placeInRaceText = PlaceInRace_TopLeft.GetComponent<TextMeshProUGUI>();
+                karts[1].placeInRaceText = PlaceInRace_TopRight.GetComponent<TextMeshProUGUI>();
+                karts[2].placeInRaceText = PlaceInRace_BottomLeft.GetComponent<TextMeshProUGUI>();
+                karts[3].placeInRaceText = PlaceInRace_BottomRight.GetComponent<TextMeshProUGUI>();
 
                 break;
         }
+        StartCoroutine(CheckAllPlayerOrder());
     }
-    private IEnumerator checkPlayer()
+    public void TurnOnNextCP(KartController kart)
     {
-        while(true)
+        checkPoints[kart.checkPointStage].DisableChild(kart.playerID);
+        if (kart.checkPointStage + 1 < checkPoints.Length)
         {
-
+            checkPoints[kart.checkPointStage + 1].EnableChild(kart.playerID);
+            kart.checkPointStage += 1;
+        }
+        else
+        {
+            //finished
+        }
+    }
+    private IEnumerator CheckAllPlayerOrder()
+    {
+        KartController[] kartsInPlaceOrder = new KartController[SelectScreenConfigs.Instance.playerAmmount];
+        for (int i = 0; i < kartsInPlaceOrder.Length; i++)
+        {
+            kartsInPlaceOrder[i] = karts[SelectScreenConfigs.Instance.playerAmmount - i - 1];
+            kartsInPlaceOrder[i].placeInRace = i + 1;
+        }
+        while (true)
+        {
+            foreach (KartController kart in karts)
+            {
+                for (int i = 0; i < SelectScreenConfigs.Instance.playerAmmount; i++)
+                {
+                    if (kart.checkPointStage > kartsInPlaceOrder[i].checkPointStage && kart.placeInRace < kartsInPlaceOrder[i].placeInRace)
+                    {
+                        kartsInPlaceOrder[i + 1] = kartsInPlaceOrder[i];
+                        kartsInPlaceOrder[i + 1].placeInRace = i + 2;
+                        kartsInPlaceOrder[i] = kart;
+                        kartsInPlaceOrder[i].placeInRace = i+1;
+                        break;
+                    }
+                }
+            }
+            for (int i = 0; i < kartsInPlaceOrder.Length; i++)
+            {
+                kartsInPlaceOrder[i].UpdateTextBoxPlaceInRace(i + 1);
+            }
             yield return new WaitForSeconds(0.1f);
         }
     }
