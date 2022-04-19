@@ -11,14 +11,29 @@ public class CoopManager : MonoBehaviour
     [SerializeField] private GameObject SpawnpointP1, SpawnpointP2, SpawnpointP3, SpawnpointP4;
     [SerializeField] private GameObject PrefabKartPadrao, PrefabKartBulky, PrefabKartBoost, PrefabKartSpeed;
     [SerializeField] private Transform PwUp_TopLeft, PwUp_TopRight, PwUp_BottomLeft, PwUp_BottomRight;
-    public List<KartController> karts = new List<KartController>();
+    [System.NonSerialized] public List<KartController> karts = new List<KartController>();
+    [SerializeField] private Transform PlaceInRace_TopLeft, PlaceInRace_TopRight, PlaceInRace_BottomLeft, PlaceInRace_BottomRight;
 
+    public GameObject checkPointParent;
+    [System.NonSerialized] public CheckPoint[] checkPoints;
     private void Awake()
     {
         Instance = this;
     }
     private void Start()
     {
+        checkPoints = new CheckPoint[checkPointParent.transform.childCount];
+        for(int i = 0; i < checkPointParent.transform.childCount; i++)
+        {
+            checkPoints[i] = checkPointParent.transform.GetChild(i).GetComponent<CheckPoint>();
+        }
+        for(int i = 1; i < checkPoints.Length; i++)
+        {
+            for(int j = 0; j < checkPoints[i].transform.childCount; j++)
+            {
+                checkPoints[i].transform.GetChild(j).gameObject.SetActive(false);
+            }
+        }
         for (int i = 3; i >= SelectScreenConfigs.Instance.playerAmmount; i--)
         {
             Camera[i].SetActive(false);
@@ -125,6 +140,14 @@ public class CoopManager : MonoBehaviour
                 PwUp_BottomLeft.gameObject.SetActive(false);
                 PwUp_BottomRight.gameObject.SetActive(false);
                 karts[0].GetComponent<KartPowerUpManager>().powerUpAtualImagem = PwUp_TopRight.GetComponent<Image>();
+
+                //placeInRaceImage
+                karts[0].placeInRaceImage = PlaceInRace_TopLeft.GetComponent<Image>();
+
+                PlaceInRace_BottomLeft.gameObject.SetActive(false);
+                PlaceInRace_BottomRight.gameObject.SetActive(false);
+                PlaceInRace_TopRight.gameObject.SetActive(false);
+
                 break;
             case 2:
                 PwUp_TopRight.gameObject.SetActive(true);
@@ -134,6 +157,13 @@ public class CoopManager : MonoBehaviour
                 PwUp_BottomLeft.gameObject.SetActive(false);
                 karts[0].GetComponent<KartPowerUpManager>().powerUpAtualImagem = PwUp_TopRight.GetComponent<Image>();
                 karts[1].GetComponent<KartPowerUpManager>().powerUpAtualImagem = PwUp_BottomRight.GetComponent<Image>();
+
+                //placeInRaceImage
+                karts[0].placeInRaceImage = PlaceInRace_TopLeft.GetComponent<Image>();
+                karts[1].placeInRaceImage = PlaceInRace_BottomLeft.GetComponent<Image>();
+
+                PlaceInRace_BottomRight.gameObject.SetActive(false);
+                PlaceInRace_TopRight.gameObject.SetActive(false);
                 break;
             case 3:
                 PwUp_TopRight.gameObject.SetActive(true);
@@ -144,6 +174,13 @@ public class CoopManager : MonoBehaviour
                 karts[0].GetComponent<KartPowerUpManager>().powerUpAtualImagem = PwUp_TopRight.GetComponent<Image>();
                 karts[1].GetComponent<KartPowerUpManager>().powerUpAtualImagem = PwUp_BottomLeft.GetComponent<Image>();
                 karts[2].GetComponent<KartPowerUpManager>().powerUpAtualImagem = PwUp_BottomRight.GetComponent<Image>();
+
+                //placeInRaceImage
+                karts[0].placeInRaceImage = PlaceInRace_TopLeft.GetComponent<Image>();
+                karts[1].placeInRaceImage = PlaceInRace_BottomLeft.GetComponent<Image>();
+                karts[2].placeInRaceImage = PlaceInRace_BottomRight.GetComponent<Image>();
+
+                PlaceInRace_TopRight.gameObject.SetActive(false);
                 break;
             case 4:
                 PwUp_TopRight.gameObject.SetActive(true);
@@ -155,7 +192,23 @@ public class CoopManager : MonoBehaviour
                 karts[1].GetComponent<KartPowerUpManager>().powerUpAtualImagem = PwUp_TopRight.GetComponent<Image>();
                 karts[2].GetComponent<KartPowerUpManager>().powerUpAtualImagem = PwUp_BottomLeft.GetComponent<Image>();
                 karts[3].GetComponent<KartPowerUpManager>().powerUpAtualImagem = PwUp_BottomRight.GetComponent<Image>();
+
+                //placeInRaceImage
+                karts[0].placeInRaceImage = PlaceInRace_TopLeft.GetComponent<Image>();
+                karts[1].placeInRaceImage = PlaceInRace_TopRight.GetComponent<Image>();
+                karts[2].placeInRaceImage = PlaceInRace_BottomLeft.GetComponent<Image>();
+                karts[3].placeInRaceImage = PlaceInRace_BottomRight.GetComponent<Image>();
+
                 break;
         }
     }
+    private IEnumerator checkPlayer()
+    {
+        while(true)
+        {
+
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
 }

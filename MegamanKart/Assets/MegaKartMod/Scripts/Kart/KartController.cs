@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEditor.SceneManagement;
 
 public class KartController : MonoBehaviour
@@ -72,6 +73,9 @@ public class KartController : MonoBehaviour
     public KeyCode powerUpKey;
 
     [System.NonSerialized] public int playerID;
+
+    [System.NonSerialized] public Image placeInRaceImage;
+    [System.NonSerialized] public int checkPointStage;
     private void Awake()
     {
         //Adiciona ambas rodas a seus devidos grupos, para facilitar referienciar(todas rodas frontais e todas rodas traseiras)
