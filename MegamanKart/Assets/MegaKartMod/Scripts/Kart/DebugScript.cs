@@ -10,7 +10,6 @@ public class DebugScript : MonoBehaviour
         KartInfos thisKartInfo = new KartInfos
         {
             kartObject = gameObject,
-            kartPlaceInRace = place,
 
         };
         ManagerPowerUps.Instance.kartList.Add(thisKartInfo);

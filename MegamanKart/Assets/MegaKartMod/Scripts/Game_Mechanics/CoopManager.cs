@@ -17,12 +17,16 @@ public class CoopManager : MonoBehaviour
 
     public GameObject checkPointParent;
     [System.NonSerialized] public CheckPoint[] checkPoints;
+    [System.NonSerialized] public GameObject[] placeFinished;
+    public GameObject[] places;
+    public Transform winScreen;
     private void Awake()
     {
         Instance = this;
     }
     private void Start()
     {
+        placeFinished = new GameObject[SelectScreenConfigs.Instance.playerAmmount];
         checkPoints = new CheckPoint[checkPointParent.transform.childCount];
         for (int i = 0; i < checkPointParent.transform.childCount; i++)
         {
@@ -215,7 +219,33 @@ public class CoopManager : MonoBehaviour
         }
         else
         {
-            //finished
+            for (int i = 0; i < placeFinished.Length; i++)
+            {
+                if (placeFinished[i] == null)
+                {
+                    if (i == 3)
+                    {
+                        placeFinished[i] = kart.transform.Find("Visual").gameObject;
+                        FinishedScreen.Instance.finishedScreen[kart.playerID].SetActive(true);
+                    }
+                    else
+                    {
+                        print(i);
+                        placeFinished[i] = kart.transform.Find("Visual").gameObject;
+                        FinishedScreen.Instance.finishedScreen[kart.playerID].SetActive(true);
+                        kart.transform.Find("Visual").transform.parent = places[i].transform;
+                        places[i].transform.Find("Visual").localPosition = Vector3.zero;
+                        places[i].transform.localScale = new Vector3(2, 2, 2);
+                        places[i].transform.Rotate(0, -172.46f, 0);
+                        break;
+                    }
+                }
+            }
+            if (placeFinished[placeFinished.Length - 1] != null)
+            {
+                winScreen.gameObject.SetActive(true);
+            }
+            Destroy(kart.gameObject);
         }
     }
     private IEnumerator CheckAllPlayerOrder()
@@ -232,13 +262,30 @@ public class CoopManager : MonoBehaviour
             {
                 for (int i = 0; i < SelectScreenConfigs.Instance.playerAmmount; i++)
                 {
-                    if (kart.checkPointStage > kartsInPlaceOrder[i].checkPointStage && kart.placeInRace < kartsInPlaceOrder[i].placeInRace)
+                    if (kart.placeInRace > kartsInPlaceOrder[i].placeInRace)
                     {
-                        kartsInPlaceOrder[i + 1] = kartsInPlaceOrder[i];
-                        kartsInPlaceOrder[i + 1].placeInRace = i + 2;
-                        kartsInPlaceOrder[i] = kart;
-                        kartsInPlaceOrder[i].placeInRace = i+1;
-                        break;
+                        if (kart.checkPointStage > kartsInPlaceOrder[i].checkPointStage)
+                        {
+                            kartsInPlaceOrder[i + 1] = kartsInPlaceOrder[i];
+                            kartsInPlaceOrder[i + 1].placeInRace = kart.placeInRace;
+                            kartsInPlaceOrder[i] = kart;
+                            kartsInPlaceOrder[i].placeInRace -= 1;
+                            break;
+                        }
+                        else if (kart.checkPointStage == kartsInPlaceOrder[i].checkPointStage)
+                        {
+                            if (kartsInPlaceOrder[i] != null && kart != null)
+                            {
+                                if (Vector3.Distance(kart.transform.position, checkPoints[kart.checkPointStage].transform.position) <
+                                Vector3.Distance(kartsInPlaceOrder[i].transform.position, checkPoints[kartsInPlaceOrder[i].checkPointStage].transform.position))
+                                {
+                                    kartsInPlaceOrder[i + 1] = kartsInPlaceOrder[i];
+                                    kartsInPlaceOrder[i + 1].placeInRace = kart.placeInRace;
+                                    kartsInPlaceOrder[i] = kart;
+                                    kartsInPlaceOrder[i].placeInRace -= 1;
+                                }
+                            }
+                        }
                     }
                 }
             }

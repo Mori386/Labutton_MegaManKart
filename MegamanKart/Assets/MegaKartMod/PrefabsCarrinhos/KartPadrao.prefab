@@ -800,7 +800,7 @@ MonoBehaviour:
   driftBoostMaximo: 100000
   driftTempoDeCarga: 3
   driftBoostDuration: 2
-  placeInRace: 2
+  placeInRace: 0
   axisRawVertical: Vertical
   axisRawHorizontal: Horizontal
   brakeKey: 32

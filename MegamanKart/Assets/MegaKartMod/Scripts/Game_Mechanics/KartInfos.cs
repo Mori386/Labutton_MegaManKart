@@ -5,5 +5,5 @@ using UnityEngine;
 public class KartInfos 
 {
     public GameObject kartObject;
-    public int kartPlaceInRace;
+    public KartController controller;
 }

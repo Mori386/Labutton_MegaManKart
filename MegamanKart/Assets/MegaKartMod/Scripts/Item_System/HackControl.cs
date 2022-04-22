@@ -55,9 +55,19 @@ public class HackControl : MonoBehaviour
     {
         foreach (KartInfos kartInfos in ManagerPowerUps.Instance.kartList)
         {
-            if(kartInfos.kartObject != casters[0].gameObject)
+            if(kartInfos.kartObject != null)
             {
-                Debuff.Instance.AplicarDebuff(kartInfos.kartObject);
+                if(casters.Count > 0 && casters[0].gameObject != null )
+                {
+                    if(kartInfos.kartObject != casters[0].gameObject)
+                    {
+                        Debuff.Instance.AplicarDebuff(kartInfos.kartObject);
+                    }
+                }
+                else
+                {
+                    Debuff.Instance.AplicarDebuff(kartInfos.kartObject);
+                }
             }
         }
         for (int i = 0; i < SelectScreenConfigs.Instance.playerAmmount; i++)

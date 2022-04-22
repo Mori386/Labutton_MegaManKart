@@ -15,9 +15,11 @@ public class SelectScreenConfigs : MonoBehaviour
             Instance = this;
             if(SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MainScene 1"))
             {
-                playerAmmount = 1;
-                kartIDPlayer = new int[1];
+                playerAmmount = 3;
+                kartIDPlayer = new int[3];
                 kartIDPlayer[0] = 0;
+                kartIDPlayer[1] = 1;
+                kartIDPlayer[2] = 3;
             }
         }
         else

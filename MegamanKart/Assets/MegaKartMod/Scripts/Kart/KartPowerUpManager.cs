@@ -96,9 +96,9 @@ public class KartPowerUpManager : MonoBehaviour
         Transform target = null;
         foreach(KartInfos kartInfos in ManagerPowerUps.Instance.kartList)
         {
-            if (kartInfos.kartObject != gameObject)
+            if (kartInfos.kartObject != gameObject && kartInfos.kartObject != null)
             {
-                if (kartInfos.kartPlaceInRace == GetComponent<KartController>().placeInRace - 1)
+                if (kartInfos.controller.placeInRace == GetComponent<KartController>().placeInRace - 1)
                 {
                     target = kartInfos.kartObject.transform;
                     GameObject missel = Instantiate(ManagerPowerUps.Instance.prefabMissel, castFrontPositionTransform.position, Quaternion.Euler(0, transform.eulerAngles.y, 0));

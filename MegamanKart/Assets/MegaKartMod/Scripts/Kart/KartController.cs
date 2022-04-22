@@ -106,7 +106,7 @@ public class KartController : MonoBehaviour
         KartInfos thisKartInfo = new KartInfos
         {
             kartObject = gameObject,
-            kartPlaceInRace = placeInRace,
+            controller = this,
 
         };
         ManagerPowerUps.Instance.kartList.Add(thisKartInfo);
